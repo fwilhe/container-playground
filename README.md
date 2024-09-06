@@ -98,6 +98,20 @@ mmdebstrap --variant=extract --include=base-files,bash,coreutils,hostname,libc-b
 mmdebstrap --variant=extract --include=base-files,bash,coreutils,hostname,libc-bin,tar,util-linux,ca-certificates < gardenlinux-sources.list | podman import - gardenlinux-exact-`date +%s`
 ```
 
+Adding a jre
+
+```Dockerfile
+FROM localhost/gardenlinux-exact-1725621316:latest
+
+RUN ["/bin/bash", "-c", "mkdir -p /opt/jre"]
+COPY sapmachine-jre-22.0.2 /opt/jre
+```
+
+```
+localhost/gl-tiny-jre                            latest                                    eeb245657541  5 weeks ago    246 MB
+localhost/gl-tiny                                latest                                    cd00673669fc  5 weeks ago    83 MB
+```
+
 
 ## Relevant Podman Commands
 
