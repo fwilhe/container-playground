@@ -1,0 +1,52 @@
+images:
+- location: "https://cloud.debian.org/images/cloud/trixie/daily/latest/debian-13-genericcloud-amd64-daily.qcow2"
+  arch: "x86_64"
+- location: "https://cloud.debian.org/images/cloud/trixie/daily/latest/debian-13-genericcloud-arm64-daily.qcow2"
+  arch: "aarch64"
+
+provision:
+- mode: system
+  script: |
+    #!/bin/bash
+    set -eux -o pipefail
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update
+    apt-get -y install nala git podman mmdebstrap debuerreotype jq pigz
+
+- mode: user
+  script: |
+    #!/bin/bash
+    set -eux -o pipefail
+    git config --global user.name "Your name"
+    git config --global user.email "your-email@example.com"
+    echo "
+    alias ls='ls --group-directories-first --time-style=+\"%Y-%m-%d %H:%M\" --color=auto --classify'
+    alias ll='ls -lh'
+    alias la='ls -lah'
+    alias lh=la
+
+    alias g=git
+    alias ga='git add'
+    alias gp='git push'
+    alias gl='git log'
+    alias gs='git status'
+    alias gd='git diff'
+    alias gdc='git diff --cached'
+    alias gm='git commit'
+    alias gb='git branch'
+    alias gc='git checkout'
+    alias gci='git commit'
+    alias gcl='git clone'" >> ~/.bashrc
+
+    git config --global alias.st status
+    git config --global alias.co checkout
+    git config --global alias.rb rebase
+    git config --global alias.ci commit
+    git config --global alias.br branch
+    git config --global alias.cp cherry-pick
+    git config --global alias.fa 'fetch --all'
+    git config --global credential.helper store
+
+containerd:
+  system: false
+  user: false
