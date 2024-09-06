@@ -95,6 +95,7 @@ sudo cat ctr.tar | sudo podman import -
 
 ```
 mmdebstrap --variant=extract --include=base-files,bash,coreutils,hostname,libc-bin,tar,util-linux < gardenlinux-sources.list > gl-tiny.tar
+mmdebstrap --variant=extract --include=base-files,bash,coreutils,hostname,libc-bin,tar,util-linux,ca-certificates < gardenlinux-sources.list | podman import - gardenlinux-exact-`date +%s`
 ```
 
 
